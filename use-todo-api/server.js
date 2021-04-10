@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const path = require('path')
 
 const app = express()
 const port = 8080
@@ -23,6 +24,13 @@ const todos = [
         checked: false,
     }
 ]
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
 
 app.use(morgan('tiny'))
 
@@ -82,6 +90,8 @@ app.post('/todos', (req, res) => {
 
     res.status(201).send(newTodo)
 })
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
