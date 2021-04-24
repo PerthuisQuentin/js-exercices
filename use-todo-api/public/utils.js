@@ -14,3 +14,15 @@ function post(url, body) {
     })
         .then(response => response.json())
 }
+
+function put(url, body) {
+    return fetch(url, {
+        method: 'put',
+        body: JSON.stringify(body),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+}
