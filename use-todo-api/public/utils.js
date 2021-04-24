@@ -1,19 +1,16 @@
 function get(url) {
-    return new Promise((resolve, reject) => {
-        let request = new XMLHttpRequest()
+    return fetch(url)
+        .then(response => response.json())
+}
 
-        request.onreadystatechange = function() {
-            if (this.readyState == XMLHttpRequest.DONE) {
-                if (this.status == 200) {
-                    const data = JSON.parse(request.responseText)
-                    resolve(data)
-                } else {
-                    reject(this.status)
-                }
-            }
-        }
-        
-        request.open('GET', url)
-        request.send() 
+function post(url, body) {
+    return fetch(url, {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
     })
+        .then(response => response.json())
 }
